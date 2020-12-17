@@ -2,45 +2,75 @@
     // Functions
     function buildQuiz() {
         // variable to store the HTML output
-        const output = [];
-        fetchQuestions()
-            // fetch attempts
-        function fetchQuestions() {
-            fetch(questionsURL).then(res => res.json()).then(questions => {
-                questions.forEach((currentQuestion, questionNumber) => {
-                    // variable to store the list of possible answers
-                    const answers = [];
+        var output = [];
+        fetchQuestions();
+        var answers = [];
+        fetchAnswers();
 
-                    // and for each available answer...
-                    for (letter in currentQuestion.answers) {
-                        // ...add an HTML radio button
-                        answers.push(`<label>
-                      <input type="radio" name="question${
-              questionNumber}" value="${letter}">
-                      ${letter} :
-                      ${currentQuestion.answers[letter]}
-                    </label>`);
-                    }
+        class Answer {
+            constructor(text, correct) {
+                this.text = text;
+                this.correct = correct;
+                this.question_id = this.question_id
+            }
+        }
+        class Question {
+            constructor(text, pic, answer, difficulty) {
+                this.text = text;
+                this.pic = pic;
+                this.answer = answer;
+                this.difficulty = difficulty;
+            }
+        }
 
-                    // add this question and its answers to the output
-                    output.push(`<div class="slide">
-                    <div class="question"> ${questionNumber + 1}. ${currentQuestion.text} </div>
-                    <div class="answers"> ${answers.join('')} </div>
-                  </div>`);
+        function fetchAnswers() {
+            fetch(answersURL).then(function(res) {
+                return res.json();
+            }).then(function(a) {
+                a.forEach(function(value) {
+                    answers.push(value);
                 });
-
-                // finally combine our output list into one string of HTML and put it on the
-                // page
-                quizContainer.innerHTML = output.join('');
-                slides = document.querySelectorAll(".slide");
-
-
-                // Show the first slide
-                showSlide(slides, currentSlide);
-
             })
+        };
+
+        function fetchQuestions() {
+            fetch(questionsURL).then(function(res) {
+                return res.json();
+            }).then(function(questions) {
+                let i = 0;
+                do {
+                    i += 1;
+                    console.log(i);
+                } while (i < 5);
+                const randomIndex = questions[Math.floor(Math.random() * questions.length)];
+                currentQuestion = new Question(questions[randomIndex])
+                    (function(currentQuestion, questionNumber) {
+                        // variable to store the list of possible answers
+                        // and for each available answer...
+                        let i = 0;
+                        do {
+                            i += 1;
+                            console.log(i);
+                        } while (i < 3);
+                        const randomAnswerIndex = answers[Math.floor(Math.random() * answers.length)];
+                        currentAnswer = new Answer(answers[randomAnswerIndex])
+                        currentQuestion.currentAnswer.forEach(ans =>
+                            // ...add an HTML radio button
+                            ans.push("<label>\n<input type=\"radio\" name=\"question".concat(questionNumber, "\" value=\"").concat(letter, "\">\n").concat(letter, " :\n                          ").concat(currentQuestion.answers[letter], "\n                        </label>"));
+                            // add this question and its answers to the output
+                            output.push("<div class=\"slide\">\n <div class=\"question\"> ".concat(questionNumber + 1, ". ").concat(currentQuestion.text, " </div>\n <div class=\"answers\"> ").concat(answers.join(''), " </div>\n</div>"));
+                        )
+                    }); // finally combine our output list into one string of HTML and put it on the
+                // page
+
+                quizContainer.innerHTML = output.join('');
+                slides = document.querySelectorAll(".slide"); // Show the first slide
+
+                showSlide(slides, currentSlide);
+            });
         }
     }
+
 
     function showResults() {
 
