@@ -1,84 +1,32 @@
 "use strict";
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 (function () {
   // Functions
   function buildQuiz() {
-    // variable to store the HTML output
-    var output = [];
-    fetchQuestions();
-    var answers = [];
-    fetchAnswers();
+    (function (q) {
+      var i = 0;
 
-    var Answer = function Answer(text, correct) {
-      _classCallCheck(this, Answer);
+      do {
+        i += 1;
+      } while (i < 5);
 
-      this.text = text;
-      this.correct = correct;
-      this.question_id = this.question_id;
-    };
+      var randomIndex = q[Math.floor(Math.random() * q.length)];
+      questions.push(new Question(q[randomIndex]));
+    }); // function renderQuiz(currentQuestion, questionNumber) {
+    //     console.log(question);
+    //     questions.answer.forEach(answer => answer.push("<label>\n<input type=\"radio\" name=\"question".concat(questionNumber, "\" value=\"").concat(letter, "\">\n").concat(letter, " :\n                          ").concat(currentQuestion.answers[letter], "\n                        </label>"));
+    //         // add this question and its answers to the output
+    //         output.push("<div class=\"slide\">\n <div class=\"question\"> ".concat(questionNumber + 1, ". ").concat(currentQuestion.text, " </div>\n <div class=\"answers\"> ").concat(answers.join(''), " </div>\n</div>"));
+    //     )
+    // };
+    // renderQuiz()
+    // quizContainer.innerHTML = output.join('');
+    // slides = document.querySelectorAll(".slide"); // Show the first slide
+    // showSlide(slides, currentSlide);
 
-    var Question = function Question(text, pic, answer, difficulty) {
-      _classCallCheck(this, Question);
-
-      this.text = text;
-      this.pic = pic;
-      this.answer = answer;
-      this.difficulty = difficulty;
-    };
-
-    function fetchAnswers() {
-      fetch(answersURL).then(function (res) {
-        return res.json();
-      }).then(function (a) {
-        a.forEach(function (value) {
-          answers.push(value);
-        });
-      });
-    }
-
-    ;
-
-    function fetchQuestions() {
-      fetch(questionsURL).then(function (res) {
-        return res.json();
-      }).then(function (questions) {
-        var i = 0;
-
-        do {
-          i += 1;
-          console.log(i);
-        } while (i < 5);
-
-        var randomIndex = questions[Math.floor(Math.random() * questions.length)];
-        currentQuestion = new Question(questions[randomIndex])(function (currentQuestion, questionNumber) {
-          // variable to store the list of possible answers
-          // and for each available answer...
-          var i = 0;
-
-          do {
-            i += 1;
-            console.log(i);
-          } while (i < 3);
-
-          var randomAnswerIndex = answers[Math.floor(Math.random() * answers.length)];
-          currentAnswer = new Answer(answers[randomAnswerIndex]);
-          currentQuestion.currentAnswer.forEach; // ...add an HTML radio button
-
-          answers.push("<label>\n<input type=\"radio\" name=\"question".concat(questionNumber, "\" value=\"").concat(letter, "\">\n").concat(letter, " :\n                          ").concat(currentQuestion.answers[letter], "\n                        </label>")); // add this question and its answers to the output
-
-          output.push("<div class=\"slide\">\n <div class=\"question\"> ".concat(questionNumber + 1, ". ").concat(currentQuestion.text, " </div>\n <div class=\"answers\"> ").concat(answers.join(''), " </div>\n</div>"));
-        }); // finally combine our output list into one string of HTML and put it on the
-        // page
-
-        quizContainer.innerHTML = output.join('');
-        slides = document.querySelectorAll(".slide"); // Show the first slide
-
-        showSlide(slides, currentSlide);
-      });
-    }
   }
+
+  ;
 
   function showResults() {
     // gather answer containers from our quiz
