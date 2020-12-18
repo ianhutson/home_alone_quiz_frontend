@@ -19,48 +19,27 @@ class Question {
             .then(questions => {
                 for (let question of questions.data) {
                     let newQuestion = new Question(question)
-
                     question.attributes.answers.forEach(answer => {
                         let newAnswers = new Answer(answer)
                         newQuestion.answers.push(newAnswers)
                     })
-
-
                 }
                 this.renderQuestions()
             })
     }
 
     static renderQuestions() {
-
         // variable to store the HTML output
         const output = [];
 
         // for each question...
         this.allQuestions.forEach(
-            (currentQuestion, questionNumber) => {
-
-                // variable to store the list of possible answers
-                const answers = [];
-
-                // and for each available answer...
-                for (answer in currentQuestion.answers) {
-
-                    // ...add an HTML radio button
-                    answers.push(
-                        `<label>
-                    <input type="radio" name="question${questionNumber}" value="${this.answer.text}">
-                    ${this.answer.id} :
-                    ${currentQuestion.answers[this.answer.text]}
-                  </label>`
-                    );
-                }
-
+            (currentQuestion) => {
                 // add this question and its answers to the output
                 output.push(
                     `<div class="slide">
-                  <div class="question"> ${currentQuestion.question} </div>
-                  <div class="answers"> ${answers.join("")} </div>
+                  <div class="question"> ${currentQuestion.text} </div>
+                  <div class="answers"> ${Answer.allAnswers.join("")} </div>
                 </div>`
                 );
             }
@@ -106,6 +85,7 @@ class Question {
     }
 
     static showSlide(n) {
+        console.log(slides)
         slides[currentSlide].classList.remove('active-slide');
         slides[n].classList.add('active-slide');
         currentSlide = n;
