@@ -3,50 +3,135 @@ class Question {
     static allQuestions = [];
 
     constructor(question) {
-        console.log(this);
         this.id = question.id
         this.text = question.attributes.text;
         this.pic = question.attributes.pic;
-        this.correct = question.attributes.correct;
         this.difficulty = question.attributes.difficulty;
+        this.answers = []
         Question.allQuestions.push(this)
-        console.log(allQuestions)
 
-    }
 
-    static renderQuestions() {
-        for (let question of this.allQuestions) {
-            question.renderQuestion()
-        }
     }
 
     static fetchQuestions() {
         fetch(questionsURL)
             .then(res => res.json())
             .then(questions => {
-                for (let question of questions) {
-                    let newQuestion = new Question(question.data)
+                for (let question of questions.data) {
+                    let newQuestion = new Question(question)
+
+                    question.attributes.answers.forEach(answer => {
+                        let newAnswers = new Answer(answer)
+                        newQuestion.answers.push(newAnswers)
+                    })
+
+
                 }
                 this.renderQuestions()
             })
     }
 
-    renderQuestion() {
-        console.log(question)
-        const p = document.createElement('p')
-        p.innerText = this.text
-        const li = document.createElement('li')
-        li.dataset.id = this.id
-        const answersList = document.createElement('ul')
-        this.answers(function(a) {
-            let i = 0;
-            do {
-                i += 1;
-            } while (i < 3);
-            createAnswer(answer.text, answerList, this.id)
+    static renderQuestions() {
+
+        // variable to store the HTML output
+        const output = [];
+
+        // for each question...
+        this.allQuestions.forEach(
+            (currentQuestion, questionNumber) => {
+
+                // variable to store the list of possible answers
+                const answers = [];
+
+                // and for each available answer...
+                for (answer in currentQuestion.answers) {
+
+                    // ...add an HTML radio button
+                    answers.push(
+                        `<label>
+                    <input type="radio" name="question${questionNumber}" value="${this.answer.text}">
+                    ${this.answer.id} :
+                    ${currentQuestion.answers[this.answer.text]}
+                  </label>`
+                    );
+                }
+
+                // add this question and its answers to the output
+                output.push(
+                    `<div class="slide">
+                  <div class="question"> ${currentQuestion.question} </div>
+                  <div class="answers"> ${answers.join("")} </div>
+                </div>`
+                );
+            }
+        );
+
+        // finally combine our output list into one string of HTML and put it on the page
+        quizContainer.innerHTML = output.join('');
+    }
+
+    static showResults() {
+
+        // gather answer containers from our quiz
+        const answerContainers = quizContainer.querySelectorAll('.answers');
+
+        // keep track of user's answers
+        let numCorrect = 0;
+
+        // for each question...
+        myQuestions.forEach((currentQuestion, questionNumber) => {
+
+            // find selected answer
+            const answerContainer = answerContainers[questionNumber];
+            const selector = `input[name=question${questionNumber}]:checked`;
+            const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+
+            // if answer is correct
+            if (userAnswer === currentQuestion.correctAnswer) {
+                // add to the number of correct answers
+                numCorrect++;
+
+                // color the answers green
+                answerContainers[questionNumber].style.color = 'lightgreen';
+            }
+            // if answer is wrong or blank
+            else {
+                // color the answers red
+                answerContainers[questionNumber].style.color = 'red';
+            }
         });
 
-        li.append(p)
-        questionList.appendChild(li)
+        // show number of correct answers out of total
+        resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
     }
-}
+
+    static showSlide(n) {
+        slides[currentSlide].classList.remove('active-slide');
+        slides[n].classList.add('active-slide');
+        currentSlide = n;
+        if (currentSlide === 0) {
+            previousButton.style.display = 'none';
+        } else {
+            previousButton.style.display = 'inline-block';
+        }
+        if (currentSlide === slides.length - 1) {
+            nextButton.style.display = 'none';
+            submitButton.style.display = 'inline-block';
+        } else {
+            nextButton.style.display = 'inline-block';
+            submitButton.style.display = 'none';
+        }
+    }
+
+    static showNextSlide() {
+        showSlide(currentSlide + 1);
+    }
+
+    static showPreviousSlide() {
+        showSlide(currentSlide - 1);
+    }
+
+
+
+
+};
