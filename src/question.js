@@ -9,8 +9,6 @@ class Question {
         this.difficulty = question.attributes.difficulty;
         this.answers = []
         Question.allQuestions.push(this)
-
-
     }
 
     static fetchQuestions() {
@@ -22,6 +20,7 @@ class Question {
                     question.attributes.answers.forEach(answer => {
                         let newAnswers = new Answer(answer)
                         newQuestion.answers.push(newAnswers)
+
                     })
                 }
                 this.renderQuestions()
@@ -29,17 +28,25 @@ class Question {
     }
 
     static renderQuestions() {
-        // variable to store the HTML output
         const output = [];
-
-        // for each question...
+        const renderedAnswers = [];
         this.allQuestions.forEach(
             (currentQuestion) => {
-                // add this question and its answers to the output
+                currentQuestion.answers.forEach(
+                    (currentAnswer, answerNumber) => {
+                        renderedAnswers.push(
+                            `<label>
+                        <input type="radio" name="Question ${answerNumber + 1}:" value="${currentAnswer.correct}">
+                        ${answerNumber} :
+                        ${currentAnswer.text}
+                      </label>`
+                        );
+
+                    });
                 output.push(
                     `<div class="slide">
                   <div class="question"> ${currentQuestion.text} </div>
-                  <div class="answers"> ${Answer.allAnswers.join("")} </div>
+                  <div class="answers"> ${renderedAnswers.join("")} </div>
                 </div>`
                 );
             }
