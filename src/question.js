@@ -29,14 +29,15 @@ class Question {
 
     static renderQuestions() {
         const output = [];
-        const renderedAnswers = [];
         this.allQuestions.forEach(
             (currentQuestion) => {
+                const renderedAnswers = [];
                 currentQuestion.answers.forEach(
                     (currentAnswer, answerNumber) => {
+
                         renderedAnswers.push(
                             `<label>
-                        <input type="radio" name="Question ${answerNumber + 1}:" value="${currentAnswer.correct}">
+                        <input type="radio" name="answer ${answerNumber}:" value="${currentAnswer.correct}">
                         ${answerNumber} :
                         ${currentAnswer.text}
                       </label>`
@@ -57,7 +58,6 @@ class Question {
     }
 
     static showResults() {
-
         // gather answer containers from our quiz
         const answerContainers = quizContainer.querySelectorAll('.answers');
 
@@ -92,6 +92,7 @@ class Question {
     }
 
     static showSlide(n) {
+        const slides = document.querySelectorAll(".slide");
         console.log(slides)
         slides[currentSlide].classList.remove('active-slide');
         slides[n].classList.add('active-slide');
@@ -117,8 +118,6 @@ class Question {
     static showPreviousSlide() {
         showSlide(currentSlide - 1);
     }
-
-
 
 
 };
