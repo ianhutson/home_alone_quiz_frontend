@@ -1,6 +1,7 @@
 class Question {
 
     static allQuestions = [];
+    static quizArr = []
 
     constructor(question) {
         this.id = question.id
@@ -27,9 +28,20 @@ class Question {
             })
     }
 
+    static randQ() {
+
+        for (var i = 0; i < 5; i++) {
+            var rand = this.allQuestions[Math.floor(Math.random() * this.allQuestions.length)];
+            this.quizArr.push(rand);
+        }
+        return "#" + this.quizArr.join("")
+    }
+
+
     static renderQuestions() {
+        this.randQ()
         const output = [];
-        this.allQuestions.forEach(
+        this.quizArr.forEach(
             (currentQuestion) => {
                 const renderedAnswers = [];
                 currentQuestion.answers.forEach(
@@ -37,8 +49,8 @@ class Question {
 
                         renderedAnswers.push(
                             `<label>
-                        <input type="radio" name="answer ${answerNumber}:" value="${currentAnswer.correct}">
-                        ${answerNumber} :
+                        <input type="radio" name="answer ${answerNumber}" value="${currentAnswer.correct}">
+                        ${answerNumber}.
                         ${currentAnswer.text}
                       </label>`
                         );
@@ -46,6 +58,7 @@ class Question {
                     });
                 output.push(
                     `<div class="slide">
+                    <img class="pic" src="${currentQuestion.pic}">
                   <div class="question"> ${currentQuestion.text} </div>
                   <div class="answers"> ${renderedAnswers.join("")} </div>
                 </div>`
@@ -115,12 +128,16 @@ class Question {
         }
     }
 
-    static showNextSlide() {
-        showSlide(currentSlide + 1);
+    static showNextSlide(n) {
+        let currentSlide = 0;
+        currentSlide = n;
+        this.showSlide(currentSlide + 1);
     }
 
-    static showPreviousSlide() {
-        showSlide(currentSlide - 1);
+    static showPreviousSlide(n) {
+        let currentSlide = 0;
+        currentSlide = n;
+        this.showSlide(currentSlide - 1);
     }
 
 

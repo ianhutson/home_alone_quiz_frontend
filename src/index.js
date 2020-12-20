@@ -8,7 +8,6 @@ const answersURL = url + "/answers"
 Question.fetchQuestions();
 
 
-
 const previousButton = document.getElementById("previous");
 const nextButton = document.getElementById("next");
 
