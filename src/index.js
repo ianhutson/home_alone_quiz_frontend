@@ -7,8 +7,7 @@ const answersURL = url + "/answers"
 
 Question.fetchQuestions();
 
-let currentSlide = 0;
-Question.showSlide(currentSlide)
+
 
 const previousButton = document.getElementById("previous");
 const nextButton = document.getElementById("next");

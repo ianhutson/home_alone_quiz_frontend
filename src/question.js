@@ -55,6 +55,9 @@ class Question {
 
         // finally combine our output list into one string of HTML and put it on the page
         quizContainer.innerHTML = output.join('');
+
+        let currentSlide = 0;
+        this.showSlide(currentSlide);
     }
 
     static showResults() {
@@ -92,6 +95,7 @@ class Question {
     }
 
     static showSlide(n) {
+        let currentSlide = 0;
         const slides = document.querySelectorAll(".slide");
         console.log(slides)
         slides[currentSlide].classList.remove('active-slide');
