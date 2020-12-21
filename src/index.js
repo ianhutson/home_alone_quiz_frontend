@@ -15,21 +15,20 @@ function slideManager() {
     showSlide(currentSlide);
 
     function showResults() {
-        const answerContainers = quizContainer.getElementsByClassName('answers');
-        console.log(answerContainers[1])
+        const answerContainers = quizContainer.querySelectorAll('.answers');
         let numCorrect = 0;
-        Question.allQuestions.forEach((currentQuestion, questionNumber) => {
+        Question.quizArr.forEach((currentQuestion, questionNumber) => {
             const answerContainer = answerContainers[questionNumber];
             const selector = `input[name=question${questionNumber}]:checked`;
             const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-            if (userAnswer === true) {
+            if (userAnswer === "true") {
                 numCorrect++;
                 answerContainers[questionNumber].style.color = 'lightgreen';
             } else {
                 answerContainers[questionNumber].style.color = 'red';
             }
         });
-        resultsContainer.innerHTML = `${numCorrect} out of ${Question.allQuestions.length}`;
+        resultsContainer.innerHTML = `${numCorrect} out of ${Question.quizArr.length}`;
     }
 
     function showSlide(n) {
@@ -57,6 +56,7 @@ function slideManager() {
     function showPreviousSlide(n) {
         showSlide(currentSlide - 1);
     }
+
     submitButton.addEventListener('click', showResults);
     previousButton.addEventListener("click", showPreviousSlide);
     nextButton.addEventListener("click", showNextSlide);
