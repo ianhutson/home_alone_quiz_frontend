@@ -29,7 +29,6 @@ class Question {
     }
 
     static randQ() {
-
         for (var i = 0; i < 5; i++) {
             var rand = this.allQuestions[Math.floor(Math.random() * this.allQuestions.length)];
             this.quizArr.push(rand);
@@ -37,108 +36,68 @@ class Question {
         return "#" + this.quizArr.join("")
     }
 
-
     static renderQuestions() {
         this.randQ()
         const output = [];
         this.quizArr.forEach(
             (currentQuestion) => {
                 const renderedAnswers = [];
-                currentQuestion.answers.forEach(
-                    (currentAnswer, answerNumber) => {
+                Array.prototype.random = function() {
+                    return this[Math.floor((Math.random() * this.length))];
+                }
 
-                        renderedAnswers.push(
-                            `<label>
-                        <input type="radio" name="answer ${answerNumber}" value="${currentAnswer.correct}">
-                        ${answerNumber}.
-                        ${currentAnswer.text}
-                      </label>`
-                        );
+                function shuffle(array) {
+                    var currentIndex = array.length,
+                        temporaryValue, randomIndex;
 
-                    });
+                    // While there remain elements to shuffle...
+                    while (0 !== currentIndex) {
+
+                        // Pick a remaining element...
+                        randomIndex = Math.floor(Math.random() * currentIndex);
+                        currentIndex -= 1;
+
+                        // And swap it with the current element.
+                        temporaryValue = array[currentIndex];
+                        array[currentIndex] = array[randomIndex];
+                        array[randomIndex] = temporaryValue;
+                    }
+
+                    return array;
+                }
+                renderedAnswers.push(
+                    `<div class="inner-answer"><label>
+                        <input type="radio" name="answer" value="${currentQuestion.answers[0].correct}">
+                        ${currentQuestion.answers[0].text}
+                      </label></div>`
+                )
+                renderedAnswers.push(
+                    `<div class="inner-answer"><label>
+                        <input type="radio" name="answer" value="${currentQuestion.answers[1].correct}">
+                        ${currentQuestion.answers[1].text}
+                      </label></div>`
+                )
+                renderedAnswers.push(
+                    `<div class="inner-answer"><label>
+                        <input type="radio" name="answer" value="${currentQuestion.answers[2].correct}">
+                        ${currentQuestion.answers[2].text}
+                      </label></div>`
+                )
+                renderedAnswers.push(
+                    `<div class="inner-answer"><label>
+                        <input type="radio" name="answer" value="${currentQuestion.answers[3].correct}">
+                        ${currentQuestion.answers[3].text}
+                      </label></div>`
+                );
                 output.push(
                     `<div class="slide">
-                    <img class="pic" src="${currentQuestion.pic}">
-                  <div class="question"> ${currentQuestion.text} </div>
-                  <div class="answers"> ${renderedAnswers.join("")} </div>
-                </div>`
+                            <img class="pic" src="${currentQuestion.pic}">
+                          <div class="question"> ${currentQuestion.text} </div>
+                          <div class="answers"> ${shuffle(renderedAnswers).join("")} </div>
+                        </div>`
                 );
-            }
-        );
-
-        // finally combine our output list into one string of HTML and put it on the page
+            });
         quizContainer.innerHTML = output.join('');
-
-        let currentSlide = 0;
-        this.showSlide(currentSlide);
+        slideManager()
     }
-
-    static showResults() {
-        // gather answer containers from our quiz
-        const answerContainers = quizContainer.querySelectorAll('.answers');
-
-        // keep track of user's answers
-        let numCorrect = 0;
-
-        // for each question...
-        myQuestions.forEach((currentQuestion, questionNumber) => {
-
-            // find selected answer
-            const answerContainer = answerContainers[questionNumber];
-            const selector = `input[name=question${questionNumber}]:checked`;
-            const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-
-            // if answer is correct
-            if (userAnswer === currentQuestion.correctAnswer) {
-                // add to the number of correct answers
-                numCorrect++;
-
-                // color the answers green
-                answerContainers[questionNumber].style.color = 'lightgreen';
-            }
-            // if answer is wrong or blank
-            else {
-                // color the answers red
-                answerContainers[questionNumber].style.color = 'red';
-            }
-        });
-
-        // show number of correct answers out of total
-        resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
-    }
-
-    static showSlide(n) {
-        let currentSlide = 0;
-        const slides = document.querySelectorAll(".slide");
-        console.log(slides)
-        slides[currentSlide].classList.remove('active-slide');
-        slides[n].classList.add('active-slide');
-        currentSlide = n;
-        if (currentSlide === 0) {
-            previousButton.style.display = 'none';
-        } else {
-            previousButton.style.display = 'inline-block';
-        }
-        if (currentSlide === slides.length - 1) {
-            nextButton.style.display = 'none';
-            submitButton.style.display = 'inline-block';
-        } else {
-            nextButton.style.display = 'inline-block';
-            submitButton.style.display = 'none';
-        }
-    }
-
-    static showNextSlide(n) {
-        let currentSlide = 0;
-        currentSlide = n;
-        this.showSlide(currentSlide + 1);
-    }
-
-    static showPreviousSlide(n) {
-        let currentSlide = 0;
-        currentSlide = n;
-        this.showSlide(currentSlide - 1);
-    }
-
-
 };

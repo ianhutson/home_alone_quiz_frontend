@@ -1,7 +1,11 @@
-@import url(https://fonts.googleapis.com/css?family=Work+Sans:300,600);
+@font-face {
+    font-family: 'ITC Century';
+    src: url('Century-BookCondensed.otf')
+}
+
 body {
+    font-family: 'ITC Century';
     font-size: 20px;
-    font-family: 'Work Sans', sans-serif;
     color: white;
     font-weight: 300;
     text-align: center;
@@ -9,13 +13,13 @@ body {
 }
 
 .pic {
-    width: 30%
+    width: 30%;
+    padding: 10px;
 }
 
 h1 {
     font-weight: 300;
     margin: 0px;
-    padding: 10px;
     font-size: 20px;
     background-color: #276733;
     color: #fff;
@@ -71,4 +75,14 @@ button:hover {
 .quiz-container {
     position: relative;
     margin-top: 20px;
+}
+
+.inner-answer {
+    display: list-item;
+    list-style: upper-alpha;
+    clear: left;
+}
+
+.inner-answer label {
+    display: inline-block;
 }
