@@ -14,16 +14,15 @@ function slideManager() {
     let currentSlide = 0;
     showSlide(currentSlide);
 
-
-
     function showResults() {
-        const answerContainers = quizContainer.querySelectorAll('.answers');
+        const answerContainers = quizContainer.getElementsByClassName('answers');
+        console.log(answerContainers[1])
         let numCorrect = 0;
         Question.allQuestions.forEach((currentQuestion, questionNumber) => {
             const answerContainer = answerContainers[questionNumber];
             const selector = `input[name=question${questionNumber}]:checked`;
             const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-            if (userAnswer.correct === true) {
+            if (userAnswer === true) {
                 numCorrect++;
                 answerContainers[questionNumber].style.color = 'lightgreen';
             } else {
@@ -35,8 +34,6 @@ function slideManager() {
 
     function showSlide(n) {
         slides[currentSlide].classList.remove('active-slide');
-        console.log(slides)
-        console.log(slides[n])
         slides[n].classList.add('active-slide');
         currentSlide = n;
         if (currentSlide === 0) {

@@ -79,7 +79,7 @@ button:hover {
 
 .inner-answer {
     display: list-item;
-    list-style: upper-alpha;
+    list-style: upper-alpha inside;
     clear: left;
 }
 
