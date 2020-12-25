@@ -12,19 +12,21 @@ class Score {
         fetch(scoresURL)
             .then(res => res.json())
             .then(scores => {
-                this.loadedScores.push(scores)
+                for (let score of scores) {
+                    this.loadedScores.push(new Score(score))
+                }
             })
     }
 
     static generateScoreboard() {
-        // something is breaking here
         console.log(this.loadedScores)
-        this.loadedScores.forEach(score => { console.log(score) })
+        for (let score of this.loadedScores) {
+            console.log(score)
+            this.renderedScores.push(
+                score.attributes.name + " - " + score.attributes.value + "%")
+
+        }
     }
-
-
-
-
 
     // static createResult() {
     //     const allResults = []

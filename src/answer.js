@@ -57,6 +57,7 @@ class Answer {
                         <img class="pic" src="${currentQuestion.pic}">
                       <div class="question"> ${currentQuestion.text} </div>
                       <div class="answers"> ${renderedAnswers.join("")} </div>
+                      <div class="scoreboard">${Score.renderedScores.join("")}</div>
                     </div>`
                 );
             });
