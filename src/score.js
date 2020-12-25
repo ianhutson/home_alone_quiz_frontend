@@ -1,6 +1,8 @@
 class Score {
     static renderedScores = []
+    static sortedScores = []
     static loadedScores = []
+
 
     constructor(score) {
         this.value = score.value;
@@ -15,18 +17,11 @@ class Score {
                 for (let score of scores) {
                     this.loadedScores.push(new Score(score))
                 }
+                Score.sortedScores.push(Score.loadedScores.sort((a, b) => (a.value > b.value) ? 1 : -1))
             })
     }
 
-    static generateScoreboard() {
-        console.log(this.loadedScores)
-        for (let score of this.loadedScores) {
-            console.log(score)
-            this.renderedScores.push(
-                score.attributes.name + " - " + score.attributes.value + "%")
 
-        }
-    }
 
     // static createResult() {
     //     const allResults = []

@@ -13,6 +13,7 @@ class Question {
     }
 
     static fetchQuestions() {
+        Score.fetchScores();
         fetch(questionsURL)
             .then(res => res.json())
             .then(questions => {
@@ -23,6 +24,7 @@ class Question {
                         newQuestion.answers.push(newAnswers)
                     })
                 }
+
                 renderQuiz()
             })
     }

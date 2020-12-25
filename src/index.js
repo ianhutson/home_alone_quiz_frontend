@@ -67,9 +67,21 @@ function slideManager() {
     nextButton.addEventListener("click", showNextSlide);
 }
 
+function generateScoreboard() {
+    Score.sortedScores.forEach((score) => {
+        score.forEach((trueScore) => {
+            Score.renderedScores.push(
+                trueScore.name + " - " + trueScore.value + "%" + `<br>`
+            )
+        })
+    })
+}
+
+
+
+
 function renderQuiz() {
-    Score.fetchScores();
-    Score.generateScoreboard();
+    generateScoreboard();
     Question.randQ();
     Answer.renderAnswers();
     slideManager();
