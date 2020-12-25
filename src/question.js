@@ -23,7 +23,7 @@ class Question {
                         newQuestion.answers.push(newAnswers)
                     })
                 }
-                this.renderQuestions()
+                renderQuiz()
             })
     }
 
@@ -35,9 +35,5 @@ class Question {
         return "#" + this.quizArr.join("")
     }
 
-    static renderQuestions() {
-        this.randQ();
-        Answer.renderAnswers();
-        slideManager();
-    }
+
 };

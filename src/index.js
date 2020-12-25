@@ -1,9 +1,11 @@
 const quizContainer = document.getElementById('quiz');
 const resultsContainer = document.getElementById('results');
+const scoreContainer = document.getElementById('scoreboard');
 const submitButton = document.getElementById('submit');
 const url = "http://localhost:3000"
 const questionsURL = url + "/questions"
 const answersURL = url + "/answers"
+const scoresURL = url + "/scores"
 const previousButton = document.getElementById("previous");
 const nextButton = document.getElementById("next");
 
@@ -29,6 +31,9 @@ function slideManager() {
             }
         });
         resultsContainer.innerHTML = `${numCorrect} out of ${Question.quizArr.length}`;
+        scoreContainer.innerHTML = `Scoreboard: <br>${Score.renderedScores.join("")}`;
+
+
     }
 
     function showSlide(n) {
@@ -60,4 +65,12 @@ function slideManager() {
     submitButton.addEventListener('click', showResults);
     previousButton.addEventListener("click", showPreviousSlide);
     nextButton.addEventListener("click", showNextSlide);
+}
+
+function renderQuiz() {
+    Score.fetchScores();
+    Score.generateScoreboard();
+    Question.randQ();
+    Answer.renderAnswers();
+    slideManager();
 }

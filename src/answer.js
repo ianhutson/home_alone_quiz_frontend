@@ -44,7 +44,7 @@ class Answer {
                 cleanedAnswers[0].push(loadedAnswers[0])
                 const shuffledAnswers = shuffle(cleanedAnswers[0])
                 const renderedAnswers = [];
-                shuffledAnswers.forEach((answer, answerNum) => {
+                shuffledAnswers.forEach((answer) => {
                     renderedAnswers.push(
                         `<div class="inner-answer"><label>
                     <input type="radio" name="question${questionNumber}" value="${answer.correct}">
@@ -52,7 +52,6 @@ class Answer {
                   </label></div>`
                     )
                 })
-                console.log(renderedAnswers)
                 output.push(
                     `<div class="slide">
                         <img class="pic" src="${currentQuestion.pic}">
