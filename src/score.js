@@ -3,7 +3,6 @@ class Score {
     static sortedScores = []
     static loadedScores = []
 
-
     constructor(score) {
         this.value = score.value;
         this.name = score.name;
@@ -18,6 +17,7 @@ class Score {
                     this.loadedScores.push(new Score(score))
                 }
                 Score.sortedScores.push(Score.loadedScores.sort((a, b) => (a.value > b.value) ? 1 : -1))
+
             })
     }
 

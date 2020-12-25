@@ -8,19 +8,6 @@ class Answer {
 
     static renderAnswers() {
 
-        function shuffle(array) {
-            var currentIndex = array.length,
-                temporaryValue, randomIndex;
-            while (0 !== currentIndex) {
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex -= 1;
-                temporaryValue = array[currentIndex];
-                array[currentIndex] = array[randomIndex];
-                array[randomIndex] = temporaryValue;
-            }
-            return array;
-        }
-
         function getRandomUniqueFromArrayExceptHead(array, amount) {
             const [_head, ...arrayCopy] = array
             return (new Array(amount)).fill(0).map(() => {
@@ -29,7 +16,8 @@ class Answer {
             })
         }
         const output = [];
-        Question.quizArr.forEach(
+        const randomUniqueQuestions = Question.quizArr[0].slice(0,1)
+        randomUniqueQuestions.forEach(
             (currentQuestion, questionNumber) => {
 
                 Array.prototype.random = function() {

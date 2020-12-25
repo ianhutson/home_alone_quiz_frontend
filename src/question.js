@@ -30,11 +30,9 @@ class Question {
     }
 
     static randQ() {
-        for (var i = 0; i < 2; i++) {
-            var rand = this.allQuestions[Math.floor(Math.random() * this.allQuestions.length)];
-            this.quizArr.push(rand);
-        }
-        return "#" + this.quizArr.join("")
+         this.quizArr.push(this.allQuestions.sort(function() {
+            return 0.5 - Math.random();
+          }));
     }
 
 

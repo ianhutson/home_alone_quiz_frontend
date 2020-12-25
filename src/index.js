@@ -11,6 +11,18 @@ const nextButton = document.getElementById("next");
 
 Question.fetchQuestions();
 
+function shuffle(array) {
+    var currentIndex = array.length,
+        temporaryValue, randomIndex;
+    while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+    return array;
+}
 function slideManager() {
     const slides = Array.from(document.getElementsByClassName("slide"));
     let currentSlide = 0;
@@ -31,7 +43,7 @@ function slideManager() {
             }
         });
         resultsContainer.innerHTML = `${numCorrect} out of ${Question.quizArr.length}`;
-        scoreContainer.innerHTML = `Scoreboard: <br>${Score.renderedScores.join("")}`;
+        scoreContainer.innerHTML = `Scoreboard: <br>${Score.renderedScores.slice(0, 10).join("")}`;
 
 
     }
@@ -76,9 +88,6 @@ function generateScoreboard() {
         })
     })
 }
-
-
-
 
 function renderQuiz() {
     generateScoreboard();
