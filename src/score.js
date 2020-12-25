@@ -25,36 +25,38 @@ class Score {
         e.preventDefault()
         const scoreInput = e.target.children[0].value
         const scoreList = e.target.nextElementSibling
-        
-
         Score.submitscore(scoreInput, scoreList)
-    
         e.target.reset()
     }
     
-    renderScore(scoreList){
-        const li = document.createElement('li')
-        li.innerText = this.value
-        scoreList.appendChild(li)
     
+    static renderScore(){
+        scoreContainer.innerHTML = `Scoreboard: <br>${Score.renderedScores.slice(0, 5).join("")}`
     }
     
-    static submitScore(score, scoreList){
-        fetch(scoreURL, {
-            method: "POST",
+    static submitScore(){
+        const scoreInput = document.getElementById('score-input').value
+        const configObj = {
+            method: "POST", 
             headers: {
                 "Content-type": "application/json", 
                 "Accept": "application/json"
             }, 
-            body: JSON.stringify({
-                value: score.value, 
-                name: score.name
+            body: JSON.stringify({ 
+                name: scoreInput,
+                value: resultsContainer.value
             })
-        }).then(res => res.json())
-        .then(score => {
-            let newScore = new Score(score)
-            newScore.renderScore(scoreList)
+        }
+        
+        
+        fetch(scoresURL, configObj)
+        .then(res => res.json())
+        .then(data => {
+            let newScore = new Score(data.data)
+            console.log(newScore)
+            this.loadedScores.push(newScore)
         })
+    
     }
 
 }
