@@ -1,6 +1,7 @@
 const quizContainer = document.getElementById('quiz');
 const resultsContainer = document.getElementById('results');
 const scoreContainer = document.getElementById('scoreboard');
+const scoreForm = document.getElementById('score-form')
 const submitButton = document.getElementById('submit');
 const url = "http://localhost:3000"
 const questionsURL = url + "/questions"
@@ -8,7 +9,7 @@ const answersURL = url + "/answers"
 const scoresURL = url + "/scores"
 const previousButton = document.getElementById("previous");
 const nextButton = document.getElementById("next");
-
+scoreForm.addEventListener("submit", Score.submitScore)
 Question.fetchQuestions();
 
 function shuffle(array) {
@@ -42,8 +43,13 @@ function slideManager() {
                 answerContainers[questionNumber].style.color = 'red';
             }
         });
-        resultsContainer.innerHTML = `${numCorrect} out of ${Question.quizArr.length}`;
-        scoreContainer.innerHTML = `Scoreboard: <br>${Score.renderedScores.slice(0, 10).join("")}`;
+        resultsContainer.innerHTML = `Score: ${Math.round(numCorrect/Question.quizArr.length)*100}% <br><br>`;
+        scoreForm.innerHTML = "Submit your score! <br>"+ `Name: <form id="score-form">
+        <input size="10" type="text" id="score-input">
+        <input type="submit">
+    </form><br><br>`;
+        scoreContainer.innerHTML = `Scoreboard: <br>${Score.renderedScores.slice(0, 5).join("")}`;
+
 
 
     }

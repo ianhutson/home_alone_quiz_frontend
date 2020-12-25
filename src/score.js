@@ -21,29 +21,40 @@ class Score {
             })
     }
 
+    static createscore(e){
+        e.preventDefault()
+        const scoreInput = e.target.children[0].value
+        const scoreList = e.target.nextElementSibling
+        
 
-
-    // static createResult() {
-    //     const allResults = []
-    //     event.preventDefault()
-    //     const configObj = {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-type": "application/json",
-    //             "Accept": "application/json"
-    //         },
-    //         body: JSON.stringify({
-    //             content: postInput.value
-    //         })
-    //     }
-
-    //     fetch(resultsURL, configObj)
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             let newResult = new Result(data.data)
-    //             allResults.push(newResult)
-    //         })
-
-    // }
+        Score.submitscore(scoreInput, scoreList)
+    
+        e.target.reset()
+    }
+    
+    renderScore(scoreList){
+        const li = document.createElement('li')
+        li.innerText = this.value
+        scoreList.appendChild(li)
+    
+    }
+    
+    static submitScore(score, scoreList){
+        fetch(scoreURL, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json", 
+                "Accept": "application/json"
+            }, 
+            body: JSON.stringify({
+                value: score.value, 
+                name: score.name
+            })
+        }).then(res => res.json())
+        .then(score => {
+            let newScore = new Score(score)
+            newScore.renderScore(scoreList)
+        })
+    }
 
 }
