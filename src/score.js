@@ -44,19 +44,18 @@ class Score {
             }, 
             body: JSON.stringify({ 
                 name: scoreInput,
-                value: resultsContainer.value
+                value: resultsContainer.innerText.replace(/\D/g,'')
             })
         }
-        
-        
         fetch(scoresURL, configObj)
         .then(res => res.json())
         .then(data => {
-            let newScore = new Score(data.data)
-            console.log(newScore)
+            let newScore = new Score(data)
             this.loadedScores.push(newScore)
+            
         })
-    
+        this.fetchScores();
+        generateScoreboard()
     }
 
 }
