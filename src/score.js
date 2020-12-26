@@ -18,14 +18,6 @@ class Score {
                 }
             })
     }
-
-    static createscore(e){
-        e.preventDefault()
-        const scoreInput = e.target.children[0].value
-        const scoreList = e.target.nextElementSibling
-        Score.submitscore(scoreInput, scoreList)
-        e.target.reset()
-    }
     
     static submitScore(){
         const scoreInput = document.getElementById('score-input').value
@@ -43,12 +35,11 @@ class Score {
         fetch(scoresURL, configObj)
         .then(res => res.json())
         .then(data => {
-            let newScore = new Score(data)
+            let newScore = new Score(data.data.attributes)
+            console.log(newScore)
             Score.loadedScores.push(newScore)
-            
         })
         document.getElementById('score-input').value = ""
-        Score.fetchScores()
-        scoreContainer.innerHTML = `Top 5: <br>${Score.renderedScores.sort((a, b) => parseInt(b.replace(/\D/g,'')) - parseInt(a.replace(/\D/g,''))).slice(0, 5).join("")}`
+        scoreForm.innerText = ""
     }
 }
