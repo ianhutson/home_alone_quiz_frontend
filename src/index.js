@@ -46,12 +46,13 @@ function slideManager() {
         });
      
 
+        generateScoreboard();
         resultsContainer.innerHTML = `Score: ${Math.round(numCorrect/Question.quizArr.length)*100}% <br><br>`;
         scoreForm.innerHTML = "Submit your score! <br>"+ `Name: <form id="score-form">
         <input size="10" type="text" id="score-input">
         <input id="submit-score" type="button" value="Submit Score!">
-    </form><br><br>`;
-        scoreContainer.innerHTML = `Scoreboard: <br>${Score.renderedScores.slice(0, 5).join("")}`;
+        </form><br><br>`;
+        scoreContainer.innerHTML = `Top 5: <br>${Score.renderedScores.sort((a, b) => parseInt(b.replace(/\D/g,'')) - parseInt(a.replace(/\D/g,''))).slice(0, 5).join("")}`
         document.getElementById("submit-score").addEventListener("click", Score.submitScore)
     }
 
@@ -87,17 +88,23 @@ function slideManager() {
 }
 
 function generateScoreboard() {
-    Score.sortedScores.forEach((score) => {
-        score.forEach((trueScore) => {
+    Score.loadedScores.forEach((score) => {
             Score.renderedScores.push(
-                trueScore.name + " - " + trueScore.value + "%" + `<br>`
+                score.name + " - " + score.value + "%" + `<br>`
             )
-        })
+    })
+}
+function updateScoreboard() {
+    const updatedScores = []
+    Score.loadedScores.forEach((score) => {
+            updatedScores.push(
+                score.name + " - " + score.value + "%" + `<br>`
+            )
     })
 }
 
 function renderQuiz() {
-    generateScoreboard();
+    Score.fetchScores();
     Question.randQ();
     Answer.renderAnswers();
     slideManager();

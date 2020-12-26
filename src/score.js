@@ -1,6 +1,5 @@
 class Score {
     static renderedScores = []
-    static sortedScores = []
     static loadedScores = []
 
     constructor(score) {
@@ -10,14 +9,13 @@ class Score {
     }
 
     static fetchScores() {
+        this.loadedScores = []
         fetch(scoresURL)
             .then(res => res.json())
             .then(scores => {
                 for (let score of scores) {
                     this.loadedScores.push(new Score(score))
                 }
-                Score.sortedScores.push(Score.loadedScores.sort((a, b) => (a.value > b.value) ? 1 : -1))
-
             })
     }
 
@@ -27,11 +25,6 @@ class Score {
         const scoreList = e.target.nextElementSibling
         Score.submitscore(scoreInput, scoreList)
         e.target.reset()
-    }
-    
-    
-    static renderScore(){
-        scoreContainer.innerHTML = `Scoreboard: <br>${Score.renderedScores.slice(0, 5).join("")}`
     }
     
     static submitScore(){
@@ -51,11 +44,11 @@ class Score {
         .then(res => res.json())
         .then(data => {
             let newScore = new Score(data)
-            this.loadedScores.push(newScore)
+            Score.loadedScores.push(newScore)
             
         })
-        this.fetchScores();
-        generateScoreboard()
+        document.getElementById('score-input').value = ""
+        Score.fetchScores()
+        scoreContainer.innerHTML = `Top 5: <br>${Score.renderedScores.sort((a, b) => parseInt(b.replace(/\D/g,'')) - parseInt(a.replace(/\D/g,''))).slice(0, 5).join("")}`
     }
-
 }

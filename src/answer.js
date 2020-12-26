@@ -19,7 +19,6 @@ class Answer {
         const randomUniqueQuestions = Question.quizArr[0].slice(0,1)
         randomUniqueQuestions.forEach(
             (currentQuestion, questionNumber) => {
-
                 Array.prototype.random = function() {
                     return this[Math.floor((Math.random() * this.length))];
                 }
