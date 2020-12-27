@@ -36,8 +36,9 @@ class Score {
         .then(res => res.json())
         .then(data => {
             let newScore = new Score(data.data.attributes)
-            console.log(newScore)
             Score.loadedScores.push(newScore)
+            console.log(Score.loadedScores)
+            generateScoreboard()
         })
         document.getElementById('score-input').value = ""
         scoreForm.innerText = ""

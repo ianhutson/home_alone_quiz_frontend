@@ -79,7 +79,7 @@ function slideManager() {
         showSlide(currentSlide - 1);
     }
 
-    submitButton.addEventListener('click', () => {showResults(); generateScoreboard()});
+    submitButton.addEventListener('click', showResults);
     previousButton.addEventListener("click", showPreviousSlide);
     nextButton.addEventListener("click", showNextSlide);
 }
