@@ -17,7 +17,7 @@ class Question {
     static selectDifficulty(difficulty){
         if (difficulty.target.value === "easy"){
             Question.quizDifficulty = "easy"
-        Question.fetchQuestions("easy")
+            Question.fetchQuestions("easy")
     }
         else if (difficulty.target.value === "medium"){
             Question.numQuestions = 10
@@ -31,13 +31,12 @@ class Question {
         }
     }
     static fetchQuestions(difficulty) {
-
         function randQ() {
             Question.quizArr.push(Question.allQuestions.filter(q => q.difficulty === difficulty).sort(function() {
                return 0.5 - Math.random();
              }));
        }
-        h2.style.display = "none"
+        difficultyText.style.display = "none"
         easy.style.display = "none"
         medium.style.display = "none"
         hard.style.display = "none"

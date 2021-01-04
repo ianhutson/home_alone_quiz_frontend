@@ -12,7 +12,7 @@ const nextButton = document.getElementById("next");
 const easy = document.getElementById("easy")
 const medium = document.getElementById("medium")
 const hard = document.getElementById("hard")
-const h2 = document.getElementById("h2")
+const difficultyText = document.getElementById("difficulty")
 
 previousButton.style.display = "none"
 nextButton.style.display = "none"
