@@ -1,7 +1,8 @@
 class Question {
-
+    static numQuestions = 5
     static allQuestions = [];
     static quizArr = []
+    static finalQuestions = []
 
     constructor(question) {
         this.id = question.id
@@ -13,6 +14,9 @@ class Question {
     }
 
     static fetchQuestions() {
+        easy.style.display = "none"
+        medium.style.display = "none"
+        hard.style.display = "none"
         Score.fetchScores();
         fetch(questionsURL)
             .then(res => res.json())
@@ -24,9 +28,7 @@ class Question {
                         newQuestion.answers.push(newAnswers)
                     })
                 }
-
                 renderQuiz()
-             
             })
     }
 

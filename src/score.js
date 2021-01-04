@@ -37,7 +37,6 @@ class Score {
         .then(data => {
             let newScore = new Score(data.data.attributes)
             Score.loadedScores.push(newScore)
-            console.log(Score.loadedScores)
             generateScoreboard()
         })
         document.getElementById('score-input').value = ""

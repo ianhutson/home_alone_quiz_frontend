@@ -1,5 +1,4 @@
 class Answer {
-
     constructor(answer) {
         this.text = answer.text;
         this.correct = answer.correct;
@@ -7,7 +6,6 @@ class Answer {
     }
 
     static renderAnswers() {
-
         function getRandomUniqueFromArrayExceptHead(array, amount) {
             const [_head, ...arrayCopy] = array
             return (new Array(amount)).fill(0).map(() => {
@@ -16,7 +14,8 @@ class Answer {
             })
         }
         const output = [];
-        const randomUniqueQuestions = Question.quizArr[0].slice(0,1)
+        const randomUniqueQuestions = Question.quizArr[0].slice(0, Question.numQuestions)
+        Question.finalQuestions.push(randomUniqueQuestions)
         randomUniqueQuestions.forEach(
             (currentQuestion, questionNumber) => {
                 Array.prototype.random = function() {
