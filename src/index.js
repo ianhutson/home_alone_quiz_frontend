@@ -12,14 +12,15 @@ const nextButton = document.getElementById("next");
 const easy = document.getElementById("easy")
 const medium = document.getElementById("medium")
 const hard = document.getElementById("hard")
+const h2 = document.getElementById("h2")
 
 previousButton.style.display = "none"
 nextButton.style.display = "none"
 submitButton.style.display = "none"
 
-easy.addEventListener("click", Question.fetchQuestions);
-medium.addEventListener("click", Question.fetchQuestions);
-hard.addEventListener("click", Question.fetchQuestions);
+easy.addEventListener("click", Question.selectDifficulty);
+medium.addEventListener("click", Question.selectDifficulty);
+hard.addEventListener("click", Question.selectDifficulty);
 
 
 function shuffle(array) {
@@ -99,16 +100,14 @@ function generateScoreboard() {
     const renderedScores = []
     Score.loadedScores.forEach((score) => {
             renderedScores.push(
-                score.name + " - " + score.value + "%" + `<br>`
+                score.name + " - " + score.value + "%" + score.difficulty`<br>`
             )
     })
 scoreContainer.innerHTML = `Top 5: <br>${renderedScores.sort((a, b) => parseInt(b.replace(/\D/g,'')) - parseInt(a.replace(/\D/g,''))).slice(0, 5).join("")}`
 }
 
 function renderQuiz() {
-  
     Score.fetchScores();
-    Question.randQ();
     Answer.renderAnswers();
     slideManager();
 }

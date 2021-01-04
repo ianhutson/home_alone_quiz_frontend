@@ -5,7 +5,7 @@ class Score {
     constructor(score) {
         this.value = score.value;
         this.name = score.name;
-        this.difficulty = "default"
+        this.difficulty = Question.quizDifficulty
     }
 
     static fetchScores() {

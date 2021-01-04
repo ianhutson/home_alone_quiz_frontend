@@ -3,6 +3,7 @@ class Question {
     static allQuestions = [];
     static quizArr = []
     static finalQuestions = []
+    static quizDifficulty = ""
 
     constructor(question) {
         this.id = question.id
@@ -13,7 +14,30 @@ class Question {
         Question.allQuestions.push(this)
     }
 
-    static fetchQuestions() {
+    static selectDifficulty(difficulty){
+        if (difficulty.target.value === "easy"){
+            Question.quizDifficulty = "easy"
+        Question.fetchQuestions("easy")
+    }
+        else if (difficulty.target.value === "medium"){
+            Question.numQuestions = 10
+            Question.quizDifficulty = "medium"
+            Question.fetchQuestions("medium")
+        }
+        else {
+            Question.quizDifficulty = "hard"
+            Question.numQuestions = 15
+            Question.fetchQuestions("hard")
+        }
+    }
+    static fetchQuestions(difficulty) {
+
+        function randQ() {
+            Question.quizArr.push(Question.allQuestions.filter(q => q.difficulty === difficulty).sort(function() {
+               return 0.5 - Math.random();
+             }));
+       }
+        h2.style.display = "none"
         easy.style.display = "none"
         medium.style.display = "none"
         hard.style.display = "none"
@@ -28,15 +52,12 @@ class Question {
                         newQuestion.answers.push(newAnswers)
                     })
                 }
-                renderQuiz()
+                randQ();
+                renderQuiz();
             })
     }
 
-    static randQ() {
-         this.quizArr.push(this.allQuestions.sort(function() {
-            return 0.5 - Math.random();
-          }));
-    }
+   
 
 
 };
