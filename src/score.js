@@ -5,7 +5,7 @@ class Score {
     constructor(score) {
         this.value = score.value;
         this.name = score.name;
-        this.difficulty = Question.quizDifficulty
+        this.difficulty = score.difficulty;
     }
 
     static fetchScores() {
@@ -20,6 +20,7 @@ class Score {
     }
     
     static submitScore(){
+        console.log(Question.quizDifficulty)
         const scoreInput = document.getElementById('score-input').value
         const configObj = {
             method: "POST", 
@@ -29,7 +30,9 @@ class Score {
             }, 
             body: JSON.stringify({ 
                 name: scoreInput,
-                value: resultsContainer.innerText.replace(/\D/g,'')
+                value: resultsContainer.innerText.replace(/\D/g,'',),
+                difficulty: Question.quizDifficulty,
+                
             })
         }
         fetch(scoresURL, configObj)

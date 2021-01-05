@@ -30,7 +30,7 @@ h1 {position: fixed;
 a {
     color: #81d5eb
 }
-.footer {
+footer {
     height: 10px;
     position: fixed;
     display: flex; 
@@ -116,6 +116,6 @@ button:hover {
     display: inline-block;
 }
 
-.score{
-    
+.scoreboard-container{
+    padding: 30px;
 }

@@ -1,5 +1,5 @@
 class Question {
-    static numQuestions = 5
+    static numQuestions = 0
     static allQuestions = [];
     static quizArr = []
     static finalQuestions = []
@@ -16,6 +16,7 @@ class Question {
 
     static selectDifficulty(difficulty){
         if (difficulty.target.value === "easy"){
+            Question.numQuestions = 1
             Question.quizDifficulty = "easy"
             Question.fetchQuestions("easy")
     }
