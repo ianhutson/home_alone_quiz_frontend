@@ -20,7 +20,6 @@ class Score {
     }
     
     static submitScore(){
-        console.log(Question.quizDifficulty)
         const scoreInput = document.getElementById('score-input').value
         const configObj = {
             method: "POST", 

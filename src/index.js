@@ -98,12 +98,12 @@ function slideManager() {
 
 function generateScoreboard() {
     const renderedScores = []
-    Score.loadedScores.forEach((score) => {
+    Score.loadedScores.filter(score => score.difficulty === Question.quizDifficulty).forEach((score) => {
             renderedScores.push(
                 score.name + " - " + score.value + "%" + " - " + score.difficulty + `<br>`
             )
     })
-scoreContainer.innerHTML = `<div class="scoreboard-container"> Top 5: <br>${renderedScores.sort((a, b) => parseInt(b.replace(/\D/g,'')) - parseInt(a.replace(/\D/g,''))).slice(0, 5).join("")}</div>`
+scoreContainer.innerHTML = `<div class="scoreboard-container"> ${Question.quizDifficulty.charAt(0).toUpperCase() + Question.quizDifficulty.slice(1)} Quiz Scoreboard: <br>${renderedScores.sort((a, b) => parseInt(b.replace(/\D/g,'')) - parseInt(a.replace(/\D/g,''))).slice(0, 5).join("")}</div>`
 }
 
 function renderQuiz() {

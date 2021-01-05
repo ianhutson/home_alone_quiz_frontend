@@ -26,6 +26,7 @@ h1 {position: fixed;
     font-size: 20px;
     background-color: #276733;
     color: #fff;
+    z-index: 7;
 }
 a {
     color: #81d5eb
