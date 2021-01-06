@@ -4,19 +4,21 @@ class Answer {
         this.correct = answer.correct;
         this.question_id = answer.question_id
     }
-    static shuffle(array) {
-        var currentIndex = array.length,
-            temporaryValue, randomIndex;
-        while (0 !== currentIndex) {
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-        }
-        return array;
-    }
+
     static renderAnswers() {
+        function shuffle(array) {
+            var currentIndex = array.length,
+                temporaryValue, randomIndex;
+            while (0 !== currentIndex) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+            return array;
+        }
+
         function getRandomUniqueFromArrayExceptHead(array, amount) {
             const [_head, ...arrayCopy] = array
             return (new Array(amount)).fill(0).map(() => {
@@ -24,9 +26,10 @@ class Answer {
                 return arrayCopy.splice(index, 1)[0]
             })
         }
+
         const output = [];
         const randomUniqueQuestions = Question.quizArr[0].slice(0, Question.numQuestions)
-        Question.finalQuestions.push(randomUniqueQuestions)
+        Question.finalQuestions.push(randomUniqueQuestions);
         randomUniqueQuestions.forEach(
             (currentQuestion, questionNumber) => {
                 Array.prototype.random = function() {
@@ -37,9 +40,10 @@ class Answer {
                     loadedAnswers.push(currentAnswer)
                 })
                 const cleanedAnswers = []
+
                 cleanedAnswers.push(getRandomUniqueFromArrayExceptHead(loadedAnswers, 3))
                 cleanedAnswers[0].push(loadedAnswers[0])
-                const shuffledAnswers = this.shuffle(cleanedAnswers[0])
+                const shuffledAnswers = shuffle(cleanedAnswers[0])
                 const renderedAnswers = [];
                 shuffledAnswers.forEach((answer) => {
                     renderedAnswers.push(

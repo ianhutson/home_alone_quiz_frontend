@@ -18,12 +18,16 @@ previousButton.style.display = "none"
 nextButton.style.display = "none"
 submitButton.style.display = "none"
 
-easy.addEventListener("click", Question.selectDifficulty);
-medium.addEventListener("click", Question.selectDifficulty);
-hard.addEventListener("click", Question.selectDifficulty);
+easy.addEventListener("click", Question.fetchQuestions);
+medium.addEventListener("click", Question.fetchQuestions);
+hard.addEventListener("click", Question.fetchQuestions);
 
 function renderQuiz() {
-    Score.fetchScores();
     Answer.renderAnswers();
     Question.slideManager();
+    difficultyText.style.display = "none"
+    easy.style.display = "none"
+    medium.style.display = "none"
+    hard.style.display = "none"
+    Score.fetchScores();
 }

@@ -28,7 +28,6 @@ class Question {
                 const answerContainer = answerContainers[questionNumber];
                 const selector = `input[name=question${questionNumber}]:checked`;
                 const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-
                 if (userAnswer === "true") {
                     numCorrect++;
                     answerContainers[questionNumber].style.color = 'lightgreen';
@@ -36,7 +35,6 @@ class Question {
                     answerContainers[questionNumber].style.color = 'red';
                 }
             });
-            console.log(numCorrect / Question.numQuestions)
             resultsContainer.innerHTML = `Score: ${float2int((numCorrect/Question.numQuestions)*100)}% <br><br>`;
             scoreForm.innerHTML = "Submit your score! <br>" + `Name: <form id="score-form">
             <input size="10" type="text" id="score-input">
@@ -75,32 +73,19 @@ class Question {
         previousButton.addEventListener("click", showPreviousSlide);
         nextButton.addEventListener("click", showNextSlide);
     }
-    static selectDifficulty(difficulty) {
-        if (difficulty.target.value === "easy") {
-            Question.numQuestions = 5
-            Question.quizDifficulty = "easy"
-            Question.fetchQuestions("easy")
-        } else if (difficulty.target.value === "medium") {
-            Question.numQuestions = 10
-            Question.quizDifficulty = "medium"
-            Question.fetchQuestions("medium")
-        } else {
-            Question.quizDifficulty = "hard"
-            Question.numQuestions = 15
-            Question.fetchQuestions("hard")
-        }
+
+
+
+    static randQ(difficulty) {
+        console.log(Question.allQuestions)
+        console.log(Question.allQuestions.filter(q => q.difficulty === difficulty))
+        Question.quizArr.push(Question.allQuestions.filter(q => q.difficulty === difficulty).sort(function() {
+            return 0.5 - Math.random();
+        }));
+
     }
+
     static fetchQuestions(difficulty) {
-        function randQ() {
-            Question.quizArr.push(Question.allQuestions.filter(q => q.difficulty === difficulty).sort(function() {
-                return 0.5 - Math.random();
-            }));
-        }
-        difficultyText.style.display = "none"
-        easy.style.display = "none"
-        medium.style.display = "none"
-        hard.style.display = "none"
-        Score.fetchScores();
         fetch(questionsURL)
             .then(res => res.json())
             .then(questions => {
@@ -111,8 +96,25 @@ class Question {
                         newQuestion.answers.push(newAnswers)
                     })
                 }
-                randQ();
+                selectDifficulty();
                 renderQuiz();
             })
+
+        function selectDifficulty() {
+            if (difficulty.target.value === "easy") {
+                Question.numQuestions = 5
+                Question.quizDifficulty = "easy"
+
+            } else if (difficulty.target.value === "medium") {
+                Question.numQuestions = 10
+                Question.quizDifficulty = "medium"
+
+            } else {
+                Question.quizDifficulty = "hard"
+                Question.numQuestions = 15
+            }
+            Question.randQ(difficulty.target.value);
+        }
+
     }
 };
