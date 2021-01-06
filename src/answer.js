@@ -4,7 +4,18 @@ class Answer {
         this.correct = answer.correct;
         this.question_id = answer.question_id
     }
-
+    static shuffle(array) {
+        var currentIndex = array.length,
+            temporaryValue, randomIndex;
+        while (0 !== currentIndex) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+        return array;
+    }
     static renderAnswers() {
         function getRandomUniqueFromArrayExceptHead(array, amount) {
             const [_head, ...arrayCopy] = array
@@ -28,7 +39,7 @@ class Answer {
                 const cleanedAnswers = []
                 cleanedAnswers.push(getRandomUniqueFromArrayExceptHead(loadedAnswers, 3))
                 cleanedAnswers[0].push(loadedAnswers[0])
-                const shuffledAnswers = shuffle(cleanedAnswers[0])
+                const shuffledAnswers = this.shuffle(cleanedAnswers[0])
                 const renderedAnswers = [];
                 shuffledAnswers.forEach((answer) => {
                     renderedAnswers.push(

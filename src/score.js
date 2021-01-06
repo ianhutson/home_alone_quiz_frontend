@@ -7,7 +7,15 @@ class Score {
         this.name = score.name;
         this.difficulty = score.difficulty;
     }
-
+    static generateScoreboard() {
+        const renderedScores = []
+        Score.loadedScores.filter(score => score.difficulty === Question.quizDifficulty).forEach((score) => {
+            renderedScores.push(
+                score.name + " - " + score.value + "%" + " - " + score.difficulty + `<br>`
+            )
+        })
+        scoreContainer.innerHTML = `<div class="scoreboard-container"> ${Question.quizDifficulty.charAt(0).toUpperCase() + Question.quizDifficulty.slice(1)} Quiz Scoreboard: <br>${renderedScores.sort((a, b) => parseInt(b.replace(/\D/g,'')) - parseInt(a.replace(/\D/g,''))).slice(0, 5).join("")}</div>`
+    }
     static fetchScores() {
         this.loadedScores = []
         fetch(scoresURL)
@@ -18,29 +26,29 @@ class Score {
                 }
             })
     }
-    
-    static submitScore(){
+
+    static submitScore() {
         const scoreInput = document.getElementById('score-input').value
         const configObj = {
-            method: "POST", 
+            method: "POST",
             headers: {
-                "Content-type": "application/json", 
+                "Content-type": "application/json",
                 "Accept": "application/json"
-            }, 
-            body: JSON.stringify({ 
+            },
+            body: JSON.stringify({
                 name: scoreInput,
-                value: resultsContainer.innerText.replace(/\D/g,'',),
+                value: resultsContainer.innerText.replace(/\D/g, '', ),
                 difficulty: Question.quizDifficulty,
-                
+
             })
         }
         fetch(scoresURL, configObj)
-        .then(res => res.json())
-        .then(data => {
-            let newScore = new Score(data.data.attributes)
-            Score.loadedScores.push(newScore)
-            generateScoreboard()
-        })
+            .then(res => res.json())
+            .then(data => {
+                let newScore = new Score(data.data.attributes)
+                Score.loadedScores.push(newScore)
+                Score.generateScoreboard()
+            })
         document.getElementById('score-input').value = ""
         scoreForm.innerText = ""
     }
