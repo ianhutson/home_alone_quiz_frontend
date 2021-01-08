@@ -27,7 +27,7 @@ class Answer {
             })
         }
 
-        const output = [];
+        const slideOutput = [];
         const randomUniqueQuestions = Question.quizArr[0].slice(0, Question.numQuestions)
         Question.finalQuestions.push(randomUniqueQuestions);
         randomUniqueQuestions.forEach(
@@ -53,15 +53,14 @@ class Answer {
                   </label></div>`
                     )
                 })
-                output.push(
+                slideOutput.push(
                     `<div class="slide">
                         <img class="pic" src="${currentQuestion.pic}">
                       <div class="question"> ${currentQuestion.text} </div>
                       <div class="answers"> ${renderedAnswers.join("")} </div>
-                     
                     </div>`
                 );
             });
-        quizContainer.innerHTML = output.join('');
+        quizContainer.innerHTML = slideOutput.join('');
     }
 }

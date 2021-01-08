@@ -7,6 +7,7 @@ class Score {
         this.name = score.name;
         this.difficulty = score.difficulty;
     }
+
     static generateScoreboard() {
         const renderedScores = []
         Score.loadedScores.filter(score => score.difficulty === Question.quizDifficulty).forEach((score) => {
@@ -16,6 +17,7 @@ class Score {
         })
         scoreContainer.innerHTML = `<div class="scoreboard-container"> ${Question.quizDifficulty.charAt(0).toUpperCase() + Question.quizDifficulty.slice(1)} Quiz Scoreboard: <br>${renderedScores.sort((a, b) => parseInt(b.replace(/\D/g,'')) - parseInt(a.replace(/\D/g,''))).slice(0, 5).join("")}</div>`
     }
+
     static fetchScores() {
         this.loadedScores = []
         fetch(scoresURL)
