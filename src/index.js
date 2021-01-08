@@ -12,7 +12,9 @@ const nextButton = document.getElementById("next");
 const easy = document.getElementById("easy")
 const medium = document.getElementById("medium")
 const hard = document.getElementById("hard")
+const randomQuiz = document.getElementById("random")
 const difficultyText = document.getElementById("difficulty")
+
 
 previousButton.style.display = "none"
 nextButton.style.display = "none"
@@ -21,6 +23,7 @@ submitButton.style.display = "none"
 easy.addEventListener("click", Question.fetchQuestions);
 medium.addEventListener("click", Question.fetchQuestions);
 hard.addEventListener("click", Question.fetchQuestions);
+randomQuiz.addEventListener("click", Question.fetchQuestions);
 
 function renderQuiz() {
     Answer.renderAnswers();
@@ -29,5 +32,6 @@ function renderQuiz() {
     easy.style.display = "none"
     medium.style.display = "none"
     hard.style.display = "none"
+    randomQuiz.style.display = "none"
     Score.fetchScores();
 }

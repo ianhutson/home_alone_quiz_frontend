@@ -77,12 +77,14 @@ class Question {
 
 
     static randQ(difficulty) {
-        console.log(Question.allQuestions)
-        console.log(Question.allQuestions.filter(q => q.difficulty === difficulty))
-        Question.quizArr.push(Question.allQuestions.filter(q => q.difficulty === difficulty).sort(function() {
-            return 0.5 - Math.random();
-        }));
+        if (difficulty === "random") {
+            Question.quizArr.push(this.allQuestions)
+        } else {
 
+            Question.quizArr.push(Question.allQuestions.filter(q => q.difficulty === difficulty).sort(function() {
+                return 0.5 - Math.random();
+            }));
+        }
     }
 
     static fetchQuestions(difficulty) {
@@ -109,12 +111,25 @@ class Question {
                 Question.numQuestions = 10
                 Question.quizDifficulty = "medium"
 
-            } else {
+            } else if (difficulty.target.value === "hard") {
                 Question.quizDifficulty = "hard"
                 Question.numQuestions = 15
+            } else {
+                Question.quizDifficulty = "random"
+                Question.numQuestions = 10
             }
             Question.randQ(difficulty.target.value);
         }
 
     }
 };
+
+// static randQ(difficulty) {
+//     if (difficulty === "random") {
+//         Question.quizArr.push(Question.allQuestions)
+//     } else {
+//         Question.quizArr.push(Question.allQuestions.filter(q => q.difficulty === difficulty).sort(function() {
+//             return 0.5 - Math.random();
+//         }));
+//     }
+// }
