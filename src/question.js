@@ -123,13 +123,3 @@ class Question {
 
     }
 };
-
-// static randQ(difficulty) {
-//     if (difficulty === "random") {
-//         Question.quizArr.push(Question.allQuestions)
-//     } else {
-//         Question.quizArr.push(Question.allQuestions.filter(q => q.difficulty === difficulty).sort(function() {
-//             return 0.5 - Math.random();
-//         }));
-//     }
-// }
